@@ -1,34 +1,33 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Seashell } from './entities/seashell.entity';
 import { SeashellsService } from './seashells.service';
-import { CreateSeashellDto } from './dto/create-seashell.dto';
-import { UpdateSeashellDto } from './dto/update-seashell.dto';
 
 @Controller('seashells')
 export class SeashellsController {
   constructor(private readonly seashellsService: SeashellsService) {}
 
   @Post()
-  create(@Body() createSeashellDto: CreateSeashellDto) {
-    return this.seashellsService.create(createSeashellDto);
+  async create(@Body() seashell: Seashell): Promise<Seashell> {
+    return await this.seashellsService.create(seashell);
   }
 
   @Get()
-  findAll() {
-    return this.seashellsService.findAll();
+  async findAll(): Promise<Seashell[]> {
+    return await this.seashellsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.seashellsService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Seashell> {
+    return await this.seashellsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSeashellDto: UpdateSeashellDto) {
-    return this.seashellsService.update(+id, updateSeashellDto);
+  async update(@Param('id') id: string, @Body() seashell: Seashell): Promise<any> {
+    return await this.seashellsService.update(+id, seashell);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.seashellsService.remove(+id);
+  async remove(@Param('id') id: string): Promise<any> {
+    return await this.seashellsService.remove(+id);
   }
 }
